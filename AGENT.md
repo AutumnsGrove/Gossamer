@@ -5,17 +5,24 @@
 ---
 
 ## Project Purpose
-[Fill in: What this project does - 1-2 sentences]
+Gossamer is an open-source ASCII visual effects library for web applications. It provides canvas-based rendering of character-art effects including floating clouds, image transformations, ambient backgrounds, and decorative borders. Framework-agnostic core with official adapters for Svelte, React, and Vue.
 
 ## Tech Stack
-[Fill in: Technologies, frameworks, and languages used]
-- Language:
-- Framework:
-- Key Libraries:
-- Package Manager:
+- Language: TypeScript
+- Framework: Svelte 5 (for @gossamer/svelte package)
+- Key Libraries: None (uses native 2D Canvas API)
+- Package Manager: pnpm (monorepo with workspaces)
+- Build Tool: Vite
+- Testing: Vitest
 
 ## Architecture Notes
-[Fill in: Key architectural decisions, patterns, or structure]
+- **Monorepo structure** with framework-agnostic core
+- **Core package** (`gossamer`): Vanilla JS/TS canvas rendering engine
+- **Framework packages**: Component wrappers for Svelte, React, Vue (future)
+- **2D Canvas-based**: No WebGL/Three.js dependencies in v1.0
+- **Brightness-to-character mapping**: Core algorithm converts visual data to ASCII
+- **Pattern generators**: Perlin noise, wave patterns, static noise for ambient effects
+- **Performance-focused**: Cell-based rendering, FPS limiting, visibility-based animation
 
 ---
 
