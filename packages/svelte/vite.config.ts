@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 import { resolve } from 'path';
 
@@ -34,5 +34,10 @@ export default defineConfig({
     alias: {
       '@autumnsgrove/gossamer': resolve(__dirname, '../core/src/index.ts'),
     },
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    include: ['src/**/*.test.ts'],
   },
 });

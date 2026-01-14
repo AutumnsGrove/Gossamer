@@ -155,7 +155,8 @@ Refinement, testing, and documentation.
     - [x] patterns.ts - 26 tests (3 skipped for browser-only)
     - [x] animation.ts - 26 tests
     - [x] index.ts - 16 tests
-  - [ ] Component tests for Svelte components
+  - [x] Svelte package tests (22 tests passing)
+    - [x] presets.ts - 22 tests
   - [ ] Integration tests for common use cases
 
 ---
@@ -204,4 +205,4 @@ Project setup and tooling.
 ---
 
 **Last Updated:** 2026-01-14
-**Status:** Phase M1-M3 complete. Core library and Svelte components implemented. Vitest configured with 85 unit tests passing. Ready for examples and documentation.
+**Status:** Phase M1-M3 complete. Core library and Svelte components implemented. Vitest configured with 107 tests passing (85 core + 22 svelte). Ready for examples and documentation.
