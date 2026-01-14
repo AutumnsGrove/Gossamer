@@ -226,22 +226,34 @@ export function requestIdleCallback(
   callback: () => void,
   options?: { timeout?: number }
 ): number {
-  if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-    return window.requestIdleCallback(callback, options);
+  // Use globalThis for cross-environment compatibility
+  const global = globalThis as typeof globalThis & {
+    requestIdleCallback?: typeof window.requestIdleCallback;
+    setTimeout: typeof setTimeout;
+  };
+
+  if (typeof global.requestIdleCallback === 'function') {
+    return global.requestIdleCallback(callback, options);
   }
 
   // Fallback using setTimeout
-  return window.setTimeout(callback, options?.timeout ?? 1) as unknown as number;
+  return global.setTimeout(callback, options?.timeout ?? 1) as unknown as number;
 }
 
 /**
  * Cancel idle callback with fallback
  */
 export function cancelIdleCallback(id: number): void {
-  if (typeof window !== 'undefined' && 'cancelIdleCallback' in window) {
-    window.cancelIdleCallback(id);
+  // Use globalThis for cross-environment compatibility
+  const global = globalThis as typeof globalThis & {
+    cancelIdleCallback?: typeof window.cancelIdleCallback;
+    clearTimeout: typeof clearTimeout;
+  };
+
+  if (typeof global.cancelIdleCallback === 'function') {
+    global.cancelIdleCallback(id);
   } else {
-    window.clearTimeout(id);
+    global.clearTimeout(id);
   }
 }
 

@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import { resolve } from 'path';
 import dts from 'vite-plugin-dts';
 
@@ -20,5 +20,10 @@ export default defineConfig({
     },
     sourcemap: true,
     minify: false,
+  },
+  test: {
+    globals: true,
+    include: ['src/**/*.test.ts'],
+    environment: 'jsdom',
   },
 });
