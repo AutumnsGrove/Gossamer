@@ -1,0 +1,37 @@
+{
+  "name": "gossamer-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "ASCII visual effects library for web applications",
+  "author": "AutumnsGrove",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AutumnsGrove/Gossamer.git"
+  },
+  "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "test:coverage": "pnpm -r test:coverage",
+    "lint": "pnpm -r lint",
+    "format": "prettier --write \"**/*.{js,ts,svelte,json,md}\"",
+    "format:check": "prettier --check \"**/*.{js,ts,svelte,json,md}\"",
+    "clean": "pnpm -r clean && rm -rf node_modules",
+    "prepare": "pnpm build"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "eslint": "^8.55.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.1.0",
+    "prettier-plugin-svelte": "^3.1.0",
+    "typescript": "^5.3.0",
+    "vite": "^5.0.0",
+    "vitest": "^1.0.0"
+  },
+  "packageManager": "pnpm@8.12.0"
+}
