@@ -149,9 +149,14 @@ Refinement, testing, and documentation.
   - [ ] Integration examples
 - [ ] Build interactive demo/playground
 - [x] Add TypeScript types to exports
-- [ ] Write comprehensive tests
-  - [ ] Unit tests for core utilities (use `javascript-testing` skill)
-  - [ ] Component tests for Svelte components
+- [x] Write comprehensive tests
+  - [x] Unit tests for core utilities (85 tests passing)
+    - [x] characters.ts - 17 tests
+    - [x] patterns.ts - 26 tests (3 skipped for browser-only)
+    - [x] animation.ts - 26 tests
+    - [x] index.ts - 16 tests
+  - [x] Svelte package tests (22 tests passing)
+    - [x] presets.ts - 22 tests
   - [ ] Integration tests for common use cases
 
 ---
@@ -181,7 +186,7 @@ Project setup and tooling.
 - [x] Create pnpm-workspace.yaml
 - [x] Create tsconfig.json (root and per-package)
 - [x] Set up Vite build configuration
-- [ ] Set up Vitest test runner (use `javascript-testing` skill)
+- [x] Set up Vitest test runner (use `javascript-testing` skill)
 - [ ] Configure ESLint and Prettier (use `code-quality` skill)
 - [ ] Set up CI/CD pipeline (use `cicd-automation` skill)
 - [ ] Create MIT LICENSE file
@@ -200,4 +205,4 @@ Project setup and tooling.
 ---
 
 **Last Updated:** 2026-01-14
-**Status:** Phase M1-M3 complete. Core library and Svelte components implemented. Ready for testing, examples, and documentation.
+**Status:** Phase M1-M3 complete. Core library and Svelte components implemented. Vitest configured with 107 tests passing (85 core + 22 svelte). Ready for examples and documentation.

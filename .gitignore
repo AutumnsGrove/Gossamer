@@ -61,3 +61,4 @@ ENV/
 *.backup
 .backup-*/
 .baseproject-backup-*/
+node-compile-cache/

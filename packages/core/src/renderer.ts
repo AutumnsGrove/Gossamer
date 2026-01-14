@@ -75,7 +75,7 @@ export class GossamerRenderer {
    * Set up the canvas with optimal rendering settings
    */
   private setupCanvas(): void {
-    const { canvas, fontFamily, cellHeight } = this.config;
+    const { fontFamily, cellHeight } = this.config;
 
     // Set font for consistent character sizing
     this.ctx.font = `${cellHeight}px ${fontFamily}`;
@@ -168,7 +168,7 @@ export class GossamerRenderer {
    * Render ASCII from a brightness grid (for pattern-based rendering)
    */
   renderFromBrightnessGrid(grid: number[][]): void {
-    const { canvas, characters, cellWidth, cellHeight, color } = this.config;
+    const { characters, cellWidth, cellHeight, color } = this.config;
 
     this.clear();
     this.ctx.fillStyle = color;
