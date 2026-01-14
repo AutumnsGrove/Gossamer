@@ -6,6 +6,10 @@
  * @packageDocumentation
  */
 
+// =============================================================================
+// Core Types
+// =============================================================================
+
 /**
  * Core configuration for ASCII rendering
  */
@@ -29,6 +33,32 @@ export interface GossamerConfig {
 }
 
 /**
+ * Preset configuration for effects
+ */
+export interface PresetConfig {
+  /** Preset display name */
+  name: string;
+  /** Preset description */
+  description: string;
+  /** Character set */
+  characters: string;
+  /** Pattern type */
+  pattern: 'perlin' | 'waves' | 'static' | 'ripple' | 'fbm';
+  /** Pattern frequency */
+  frequency: number;
+  /** Pattern amplitude */
+  amplitude: number;
+  /** Animation speed */
+  speed: number;
+  /** Default opacity */
+  opacity: number;
+}
+
+// =============================================================================
+// Constants
+// =============================================================================
+
+/**
  * Default character set ordered from light to dark
  */
 export const DEFAULT_CHARACTERS = ' .:-=+*#%@';
@@ -46,6 +76,10 @@ export const DEFAULT_CONFIG: Required<GossamerConfig> = {
   animate: false,
   fps: 30,
 };
+
+// =============================================================================
+// Core Functions
+// =============================================================================
 
 /**
  * Calculate brightness from RGB values using luminance formula
@@ -66,16 +100,104 @@ export function brightnessToChar(
   return characters[Math.min(index, characters.length - 1)];
 }
 
+// =============================================================================
+// Module Exports
+// =============================================================================
+
+// Renderer
+export { GossamerRenderer } from './renderer';
+export type { RenderConfig } from './renderer';
+
+// Patterns
+export {
+  perlinNoise2D,
+  fbmNoise,
+  wavePattern,
+  ripplePattern,
+  staticNoise,
+  seededNoise2D,
+  generateBrightnessGrid,
+  gridToImageData,
+  DEFAULT_PATTERN_CONFIG,
+} from './patterns';
+export type { PatternConfig, PatternType } from './patterns';
+
+// Characters
+export {
+  CHARACTER_SETS,
+  getCharacterSet,
+  getCharacters,
+  getCharacterSetNames,
+  createCharacterSet,
+  validateCharacterSet,
+  invertCharacters,
+} from './characters';
+export type { CharacterSet } from './characters';
+
+// Animation
+export {
+  createAnimationLoop,
+  throttle,
+  debounce,
+  calculateFPS,
+  easings,
+} from './animation';
+export type { AnimationState, AnimationOptions, EasingFunction } from './animation';
+
+// Canvas Utilities
+export {
+  createCanvas,
+  getDevicePixelRatio,
+  resizeCanvasToContainer,
+  createOffscreenCanvas,
+  clearCanvas,
+  getImageData,
+  optimizeContext,
+  setupTextRendering,
+  measureTextWidth,
+  calculateCellSize,
+  setBlendMode,
+} from './utils/canvas';
+export type { CanvasOptions } from './utils/canvas';
+
+// Image Utilities
+export {
+  loadImage,
+  loadAndScaleImage,
+  imageToPixelData,
+  extractBrightness,
+  sampleImageCells,
+  rgbToHex,
+  hexToRgb,
+  adjustBrightness,
+  adjustContrast,
+  invertColors,
+  toGrayscale,
+} from './utils/image';
+export type { ImageLoadOptions } from './utils/image';
+
+// Performance Utilities
+export {
+  createVisibilityObserver,
+  createResizeObserver,
+  prefersReducedMotion,
+  onReducedMotionChange,
+  isLowPowerMode,
+  getRecommendedFPS,
+  createFPSCounter,
+  requestIdleCallback,
+  cancelIdleCallback,
+  isBrowser,
+  isCanvasSupported,
+  isOffscreenCanvasSupported,
+} from './utils/performance';
+export type { VisibilityCallback, PerformanceMetrics } from './utils/performance';
+
+// =============================================================================
+// Version
+// =============================================================================
+
 /**
- * Gossamer v0.0.1 - Placeholder release
- *
- * Full implementation coming soon. This package will provide:
- * - 2D Canvas ASCII rendering
- * - Ambient pattern generation
- * - Image-to-ASCII conversion
- * - Animation loops
- * - Framework adapters (Svelte, React, Vue)
- *
- * @see https://github.com/AutumnsGrove/Gossamer
+ * Gossamer version
  */
-export const VERSION = '0.0.1';
+export const VERSION = '0.1.0';
