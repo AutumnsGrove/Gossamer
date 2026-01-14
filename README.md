@@ -305,16 +305,16 @@ Gossamer follows accessibility best practices:
 
 ### v1.0 (Current)
 - [x] Core rendering engine
-- [ ] GossamerClouds component
-- [ ] GossamerImage component
-- [ ] Svelte 5 adapter
-- [ ] Preset system
-- [ ] Documentation site
+- [x] GossamerClouds component
+- [x] GossamerImage component
+- [x] Svelte 5 adapter
+- [x] Preset system
+- [x] Documentation site
 
 ### v1.1
-- [ ] GossamerText component
-- [ ] GossamerOverlay component
-- [ ] GossamerBorder component
+- [x] GossamerText component
+- [x] GossamerOverlay component
+- [x] GossamerBorder component
 - [ ] React adapter
 - [ ] Vue adapter
 
