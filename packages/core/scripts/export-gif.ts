@@ -55,7 +55,10 @@ function randomColor(): string {
  * Generate random export options
  */
 function generateRandomOptions(baseOptions: ExportOptions): ExportOptions {
-  const patterns: PatternType[] = ['perlin', 'fbm', 'waves', 'ripple', 'static'];
+  const patterns: PatternType[] = [
+    'perlin', 'fbm', 'waves', 'ripple', 'static',
+    'clouds', 'plasma', 'vortex', 'matrix', 'gradient', 'diamond', 'fractal'
+  ];
   const charSetNames = Object.keys(CHARACTER_SETS);
 
   const pattern = randomPick(patterns);
@@ -234,7 +237,10 @@ async function exportGif(options: ExportOptions): Promise<string> {
  * Export all pattern/character combinations
  */
 async function exportAll(baseOptions: ExportOptions): Promise<string[]> {
-  const patterns: PatternType[] = ['perlin', 'fbm', 'waves', 'ripple', 'static'];
+  const patterns: PatternType[] = [
+    'perlin', 'fbm', 'waves', 'ripple', 'static',
+    'clouds', 'plasma', 'vortex', 'matrix', 'gradient', 'diamond', 'fractal'
+  ];
   const charSets = ['standard', 'blocks', 'grove', 'dots', 'minimal'];
   const outputs: string[] = [];
 
@@ -275,7 +281,7 @@ function parseArgs(): ExportOptions & { all: boolean; random: boolean } {
     switch (arg) {
       case '--pattern':
       case '-p':
-        if (nextArg && ['perlin', 'fbm', 'waves', 'ripple', 'static'].includes(nextArg)) {
+        if (nextArg && ['perlin', 'fbm', 'waves', 'ripple', 'static', 'clouds', 'plasma', 'vortex', 'matrix', 'gradient', 'diamond', 'fractal'].includes(nextArg)) {
           options.pattern = nextArg as PatternType;
           i++;
         }
@@ -397,7 +403,8 @@ USAGE:
   npx tsx scripts/export-gif.ts [options]
 
 OPTIONS:
-  --pattern, -p <type>    Pattern type: perlin, fbm, waves, ripple, static
+  --pattern, -p <type>    Pattern type: perlin, fbm, waves, ripple, static,
+                          clouds, plasma, vortex, matrix, gradient, diamond, fractal
                           (default: perlin)
 
   --chars, -c <set>       Character set: standard, dense, minimal, grove,

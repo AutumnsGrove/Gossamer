@@ -43,7 +43,7 @@ export interface PresetConfig {
   /** Character set */
   characters: string;
   /** Pattern type */
-  pattern: 'perlin' | 'waves' | 'static' | 'ripple' | 'fbm';
+  pattern: 'perlin' | 'waves' | 'static' | 'ripple' | 'fbm' | 'clouds' | 'plasma' | 'vortex' | 'matrix' | 'gradient' | 'diamond' | 'fractal';
   /** Pattern frequency */
   frequency: number;
   /** Pattern amplitude */
@@ -110,17 +110,32 @@ export type { RenderConfig } from './renderer';
 
 // Patterns
 export {
+  // Core noise functions
   perlinNoise2D,
   fbmNoise,
-  wavePattern,
-  ripplePattern,
   staticNoise,
   seededNoise2D,
+  // Pattern generators
+  wavePattern,
+  ripplePattern,
+  cloudsPattern,
+  plasmaPattern,
+  vortexPattern,
+  matrixPattern,
+  gradientPattern,
+  diamondPattern,
+  fractalPattern,
+  // Grid generation (legacy API)
   generateBrightnessGrid,
   gridToImageData,
+  // Performance-optimized API
+  createBrightnessBuffer,
+  fillBrightnessBuffer,
+  getBufferValue,
+  // Config
   DEFAULT_PATTERN_CONFIG,
 } from './patterns';
-export type { PatternConfig, PatternType } from './patterns';
+export type { PatternConfig, PatternType, BrightnessBuffer } from './patterns';
 
 // Characters
 export {

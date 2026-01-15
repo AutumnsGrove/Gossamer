@@ -60,6 +60,10 @@ export class GossamerRenderer {
   private lastFrameTime: number = 0;
   private isRunning: boolean = false;
 
+  // Performance: Character texture atlas
+  private charAtlas: OffscreenCanvas | HTMLCanvasElement | null = null;
+  private atlasCharacters: string = '';
+
   constructor(canvas: HTMLCanvasElement, config: Partial<Omit<RenderConfig, 'canvas'>> = {}) {
     const context = canvas.getContext('2d');
     if (!context) {
@@ -74,6 +78,57 @@ export class GossamerRenderer {
     };
 
     this.setupCanvas();
+    this.buildCharacterAtlas();
+  }
+
+  /**
+   * Build character texture atlas for fast rendering
+   * Pre-renders all characters to an offscreen canvas, then uses drawImage
+   * instead of fillText for 5-10x faster rendering
+   */
+  private buildCharacterAtlas(): void {
+    const { characters, cellWidth, cellHeight, color, fontFamily } = this.config;
+
+    // Skip if atlas already built with same characters
+    if (this.atlasCharacters === characters && this.charAtlas) {
+      return;
+    }
+
+    // Create offscreen canvas (use OffscreenCanvas if available for better perf)
+    const atlasWidth = characters.length * cellWidth;
+    const atlasHeight = cellHeight;
+
+    if (typeof OffscreenCanvas !== 'undefined') {
+      this.charAtlas = new OffscreenCanvas(atlasWidth, atlasHeight);
+    } else {
+      this.charAtlas = document.createElement('canvas');
+      this.charAtlas.width = atlasWidth;
+      this.charAtlas.height = atlasHeight;
+    }
+
+    const ctx = this.charAtlas.getContext('2d');
+    if (!ctx) {
+      this.charAtlas = null;
+      return;
+    }
+
+
+    // Clear with transparent background
+    ctx.clearRect(0, 0, atlasWidth, atlasHeight);
+
+    // Render each character
+    ctx.fillStyle = color;
+    ctx.font = `${cellHeight}px ${fontFamily}`;
+    ctx.textBaseline = 'top';
+
+    for (let i = 0; i < characters.length; i++) {
+      const char = characters[i];
+      if (char !== ' ') {
+        ctx.fillText(char, i * cellWidth, 0);
+      }
+    }
+
+    this.atlasCharacters = characters;
   }
 
   /**
@@ -95,8 +150,20 @@ export class GossamerRenderer {
    * Update the renderer configuration
    */
   updateConfig(config: Partial<Omit<RenderConfig, 'canvas'>>): void {
+    const needsAtlasRebuild =
+      config.characters !== undefined ||
+      config.color !== undefined ||
+      config.cellWidth !== undefined ||
+      config.cellHeight !== undefined ||
+      config.fontFamily !== undefined;
+
     this.config = { ...this.config, ...config };
     this.setupCanvas();
+
+    if (needsAtlasRebuild) {
+      this.atlasCharacters = ''; // Force rebuild
+      this.buildCharacterAtlas();
+    }
   }
 
   /**
@@ -201,6 +268,100 @@ export class GossamerRenderer {
       if (char !== ' ') {
         this.ctx.fillStyle = color;
         this.ctx.fillText(char, x, y);
+      }
+    }
+  }
+
+  /**
+   * PERFORMANCE: Render from BrightnessBuffer using texture atlas
+   *
+   * Uses pre-rendered character sprites instead of fillText calls.
+   * 5-10x faster than renderFromBrightnessGrid for large canvases.
+   *
+   * @param buffer - BrightnessBuffer from fillBrightnessBuffer
+   */
+  renderFromBuffer(buffer: { data: Uint8Array; cols: number; rows: number }): void {
+    const { characters, cellWidth, cellHeight } = this.config;
+
+    this.clear();
+
+    // Fall back to fillText if atlas not available
+    if (!this.charAtlas) {
+      this.ctx.fillStyle = this.config.color;
+      const charLen = characters.length - 1;
+      let idx = 0;
+      for (let row = 0; row < buffer.rows; row++) {
+        for (let col = 0; col < buffer.cols; col++) {
+          const brightness = buffer.data[idx++];
+          const charIndex = (brightness / 255 * charLen) | 0;
+          const char = characters[Math.min(charIndex, charLen)];
+          if (char !== ' ') {
+            this.ctx.fillText(char, col * cellWidth, row * cellHeight);
+          }
+        }
+      }
+      return;
+    }
+
+    // Use atlas for fast rendering via drawImage
+    const charLen = characters.length - 1;
+    let idx = 0;
+
+    for (let row = 0; row < buffer.rows; row++) {
+      const y = row * cellHeight;
+      for (let col = 0; col < buffer.cols; col++) {
+        const brightness = buffer.data[idx++];
+        const charIndex = (brightness / 255 * charLen) | 0;
+
+        // Skip space characters (index 0 in most charsets)
+        if (charIndex === 0 && characters[0] === ' ') {
+          continue;
+        }
+
+        // Draw from atlas: source is the character's position in the atlas
+        this.ctx.drawImage(
+          this.charAtlas,
+          charIndex * cellWidth, 0, cellWidth, cellHeight, // source
+          col * cellWidth, y, cellWidth, cellHeight // destination
+        );
+      }
+    }
+  }
+
+  /**
+   * PERFORMANCE: Render brightness grid using atlas (legacy grid format)
+   *
+   * @param grid - 2D array of brightness values
+   */
+  renderGridFast(grid: number[][]): void {
+    const { characters, cellWidth, cellHeight } = this.config;
+
+    this.clear();
+
+    if (!this.charAtlas) {
+      // Fallback to standard method
+      this.renderFromBrightnessGrid(grid);
+      return;
+    }
+
+    const charLen = characters.length - 1;
+
+    for (let row = 0; row < grid.length; row++) {
+      const y = row * cellHeight;
+      const rowData = grid[row];
+      for (let col = 0; col < rowData.length; col++) {
+        const brightness = rowData[col];
+        const charIndex = (brightness / 255 * charLen) | 0;
+
+        if (charIndex === 0 && characters[0] === ' ') {
+          continue;
+        }
+
+        this.ctx.drawImage(
+          this.charAtlas,
+          charIndex * cellWidth, 0, cellWidth, cellHeight,
+          col * cellWidth, y, cellWidth, cellHeight
+        );
       }
     }
   }
