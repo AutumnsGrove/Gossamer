@@ -154,9 +154,9 @@ function generateGlassOptions(baseOptions: ExportOptions): ExportOptions {
     backgroundColor: scheme.bg,
     glassMode: true,
     patternConfig: {
-      frequency: randomRange(0.03, 0.06),
-      amplitude: randomRange(0.75, 0.95),  // Higher for visibility
-      speed: randomRange(0.15, 0.35),
+      frequency: randomRange(0.04, 0.07),
+      amplitude: randomRange(0.8, 1.0),
+      speed: randomRange(0.4, 0.8),  // More alive!
     },
   };
 }
@@ -211,11 +211,11 @@ const GLASS_DEFAULTS: Partial<ExportOptions> = {
   characters: CHARACTER_SETS['glass-mist'].characters,
   color: GROVE_COLORS.grove,
   backgroundColor: 'transparent',
-  fps: 12,
+  fps: 60,  // Buttery smooth
   patternConfig: {
-    frequency: 0.04,
-    amplitude: 0.85,  // Higher amplitude for visibility
-    speed: 0.25,
+    frequency: 0.05,
+    amplitude: 0.9,
+    speed: 0.6,  // More movement!
   },
 };
 
