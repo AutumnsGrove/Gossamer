@@ -18,6 +18,9 @@ dist/
 dist-ssr/
 *.local
 
+# Generated test outputs (GIF exports, etc.)
+output/
+
 # TypeScript
 *.tsbuildinfo
 .tsbuildinfo
