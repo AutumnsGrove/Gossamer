@@ -106,6 +106,61 @@ export const CHARACTER_SETS: Record<string, CharacterSet> = {
     characters: ' +-×÷=≠≈∞',
     bestFor: ['abstract patterns', 'tech themes', 'decorative'],
   },
+
+  // ==========================================================================
+  // GLASS-OPTIMIZED CHARACTER SETS
+  // Designed for subtle overlays on Glass components
+  // More characters = more visible gradations
+  // ==========================================================================
+
+  'glass-dots': {
+    name: 'Glass Dots',
+    description: 'Soft dot gradations for glass overlays',
+    characters: ' ·∘∙○•●',
+    bestFor: ['glass overlays', 'subtle backgrounds', 'mist effects'],
+  },
+
+  'glass-mist': {
+    name: 'Glass Mist',
+    description: 'Ethereal mist effect for glass',
+    characters: ' .·∙•◦○◉●',
+    bestFor: ['glass overlays', 'fog effects', 'ambient backgrounds'],
+  },
+
+  'glass-dust': {
+    name: 'Glass Dust',
+    description: 'Floating dust particles',
+    characters: ' ˙·∘°•◦○',
+    bestFor: ['glass overlays', 'particle effects', 'light scatter'],
+  },
+
+  'glass-soft': {
+    name: 'Glass Soft',
+    description: 'Soft block gradations for glass',
+    characters: ' ·░▒▓',
+    bestFor: ['glass overlays', 'soft gradients', 'frosted effect'],
+  },
+
+  'glass-sparkle': {
+    name: 'Glass Sparkle',
+    description: 'Subtle sparkles for glass',
+    characters: ' ·.✧✦✫★',
+    bestFor: ['glass overlays', 'highlight effects', 'magical themes'],
+  },
+
+  'glass-wave': {
+    name: 'Glass Wave',
+    description: 'Flowing wave patterns for glass',
+    characters: ' .~∼≈≋',
+    bestFor: ['glass overlays', 'water effects', 'flowing motion'],
+  },
+
+  'glass-organic': {
+    name: 'Glass Organic',
+    description: 'Natural, organic feel for glass',
+    characters: ' .·:;∘○◦•●',
+    bestFor: ['glass overlays', 'nature themes', 'grove aesthetic'],
+  },
 };
 
 /**

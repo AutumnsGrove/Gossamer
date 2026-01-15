@@ -149,6 +149,22 @@ export {
 } from './characters';
 export type { CharacterSet } from './characters';
 
+// Colors (Grove palette)
+export {
+  GROVE_GREEN,
+  CREAM,
+  BARK,
+  STATUS,
+  GROVE_COLORS,
+  GLASS_SCHEMES,
+  getGroveColor,
+  getGlassScheme,
+  getGroveColorNames,
+  getGlassSchemeNames,
+  hexToRgba,
+} from './colors';
+export type { ColorDef, GroveColorName, GlassSchemeName } from './colors';
+
 // Animation
 export {
   createAnimationLoop,
