@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { PatternType } from '@autumnsgrove/gossamer';
+  import type { PatternType } from '../index';
 
   export type BlendMode = 'normal' | 'multiply' | 'screen' | 'overlay' | 'soft-light' | 'hard-light' | 'difference';
 
@@ -40,7 +40,7 @@
     createResizeObserver,
     onReducedMotionChange,
     CHARACTER_SETS,
-  } from '@autumnsgrove/gossamer';
+  } from '../index';
 
   // Props with defaults
   let {

@@ -36,7 +36,7 @@
     createResizeObserver,
     createVisibilityObserver,
     onReducedMotionChange,
-  } from '@autumnsgrove/gossamer';
+  } from '../index';
 
   // Props with defaults
   let {

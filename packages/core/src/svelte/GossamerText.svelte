@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { PatternType } from '@autumnsgrove/gossamer';
+  import type { PatternType } from '../index';
 
   export interface GossamerTextProps {
     /** Text content to display */
@@ -34,7 +34,7 @@
     createVisibilityObserver,
     onReducedMotionChange,
     CHARACTER_SETS,
-  } from '@autumnsgrove/gossamer';
+  } from '../index';
 
   // Props with defaults
   let {

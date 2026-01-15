@@ -34,7 +34,7 @@
     brightnessToChar,
     invertCharacters,
     CHARACTER_SETS,
-  } from '@autumnsgrove/gossamer';
+  } from '../index';
 
   // Props with defaults
   let {

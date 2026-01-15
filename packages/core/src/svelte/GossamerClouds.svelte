@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import type { PatternType, PatternConfig } from '@autumnsgrove/gossamer';
+  import type { PatternType, PatternConfig } from '../index';
 
   export interface GossamerCloudsProps {
     /** Pattern type for generation */
@@ -39,7 +39,7 @@
     prefersReducedMotion,
     onReducedMotionChange,
     CHARACTER_SETS,
-  } from '@autumnsgrove/gossamer';
+  } from '../index';
   import { PRESETS } from './presets';
 
   // Props with defaults
@@ -67,7 +67,7 @@
   let animationId: number | null = null;
 
   // Apply preset if specified
-  const config = $derived(() => {
+  const config = $derived.by(() => {
     if (preset && PRESETS[preset]) {
       const p = PRESETS[preset];
       return {
@@ -93,7 +93,7 @@
 
     const elapsed = (currentTime - startTime) / 1000;
     const { cols, rows } = renderer.getCellCount();
-    const cfg = config();
+    const cfg = config;
 
     const grid = generateBrightnessGrid(
       cols,
@@ -128,7 +128,7 @@
     if (!renderer) return;
 
     const { cols, rows } = renderer.getCellCount();
-    const cfg = config();
+    const cfg = config;
 
     const grid = generateBrightnessGrid(
       cols,
@@ -148,7 +148,7 @@
   function setupRenderer(width: number, height: number): void {
     if (!canvas) return;
 
-    const cfg = config();
+    const cfg = config;
 
     // Create or update renderer
     if (renderer) {
@@ -220,7 +220,7 @@
   // React to prop changes
   $effect(() => {
     if (renderer) {
-      const cfg = config();
+      const cfg = config;
       renderer.updateConfig({
         characters: cfg.characters,
         color,
@@ -241,7 +241,7 @@
 <div
   bind:this={container}
   class="gossamer-clouds {className}"
-  style:opacity={config().opacity}
+  style:opacity={config.opacity}
 >
   <canvas
     bind:this={canvas}

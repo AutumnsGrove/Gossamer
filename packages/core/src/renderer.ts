@@ -5,7 +5,12 @@
  * by mapping brightness values to a character set.
  */
 
-import { calculateBrightness, DEFAULT_CHARACTERS } from './index';
+// Define locally to avoid circular dependency with index.ts
+const DEFAULT_CHARACTERS = ' .:-=+*#%@';
+
+function calculateBrightness(r: number, g: number, b: number): number {
+  return 0.21 * r + 0.72 * g + 0.07 * b;
+}
 
 /**
  * Configuration for the Gossamer renderer

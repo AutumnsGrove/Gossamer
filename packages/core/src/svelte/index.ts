@@ -72,4 +72,4 @@ export {
 
   // Version
   VERSION,
-} from '@autumnsgrove/gossamer';
+} from '../index';

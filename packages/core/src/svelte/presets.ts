@@ -2,7 +2,7 @@
  * Preset configurations for Gossamer effects
  */
 
-import type { PresetConfig } from '@autumnsgrove/gossamer';
+import type { PresetConfig } from '../index';
 
 /**
  * Grove-themed presets
