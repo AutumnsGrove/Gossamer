@@ -30,6 +30,71 @@ function generateHash(): string {
     .padStart(4, '0');
 }
 
+/**
+ * Pick a random element from an array
+ */
+function randomPick<T>(arr: T[]): T {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+/**
+ * Generate a random number in a range
+ */
+function randomRange(min: number, max: number): number {
+  return min + Math.random() * (max - min);
+}
+
+/**
+ * Generate a random hex color
+ */
+function randomColor(): string {
+  return '#' + Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, '0');
+}
+
+/**
+ * Generate random export options
+ */
+function generateRandomOptions(baseOptions: ExportOptions): ExportOptions {
+  const patterns: PatternType[] = ['perlin', 'fbm', 'waves', 'ripple', 'static'];
+  const charSetNames = Object.keys(CHARACTER_SETS);
+
+  const pattern = randomPick(patterns);
+  const charSetName = randomPick(charSetNames);
+  const characters = CHARACTER_SETS[charSetName].characters;
+
+  // Random color schemes
+  const colorSchemes = [
+    { color: '#ffffff', bg: '#000000' }, // Classic white on black
+    { color: '#00ff00', bg: '#000000' }, // Matrix green
+    { color: '#00ffff', bg: '#000000' }, // Cyan terminal
+    { color: '#ff00ff', bg: '#000000' }, // Magenta
+    { color: '#ffff00', bg: '#000000' }, // Yellow
+    { color: '#ff6600', bg: '#000000' }, // Orange
+    { color: '#000000', bg: '#ffffff' }, // Inverted
+    { color: randomColor(), bg: '#000000' }, // Random on black
+    { color: '#ffffff', bg: randomColor() }, // White on random
+  ];
+  const scheme = randomPick(colorSchemes);
+
+  console.log('\n🎲 Rolling the dice...');
+  console.log(`   Pattern: ${pattern}`);
+  console.log(`   Charset: ${charSetName}`);
+  console.log(`   Colors: ${scheme.color} on ${scheme.bg}`);
+
+  return {
+    ...baseOptions,
+    pattern,
+    characters,
+    color: scheme.color,
+    backgroundColor: scheme.bg,
+    patternConfig: {
+      frequency: randomRange(0.02, 0.1),
+      amplitude: randomRange(0.7, 1.0),
+      speed: randomRange(0.2, 1.0),
+    },
+  };
+}
+
 interface ExportOptions {
   pattern: PatternType;
   characters: string;
@@ -199,9 +264,9 @@ async function exportAll(baseOptions: ExportOptions): Promise<string[]> {
 /**
  * Parse command line arguments
  */
-function parseArgs(): ExportOptions & { all: boolean } {
+function parseArgs(): ExportOptions & { all: boolean; random: boolean } {
   const args = process.argv.slice(2);
-  const options = { ...DEFAULT_OPTIONS, all: false };
+  const options = { ...DEFAULT_OPTIONS, all: false, random: false };
 
   for (let i = 0; i < args.length; i++) {
     const arg = args[i];
@@ -303,6 +368,11 @@ function parseArgs(): ExportOptions & { all: boolean } {
         options.all = true;
         break;
 
+      case '--random':
+      case '-r':
+        options.random = true;
+        break;
+
       case '--help':
         printHelp();
         process.exit(0);
@@ -349,6 +419,7 @@ OPTIONS:
 
   --output, -o <dir>      Output directory (default: ./output)
   --all, -a               Export all pattern/charset combinations
+  --random, -r            Generate with random pattern, charset, and colors
   --help                  Show this help message
 
 EXAMPLES:
@@ -369,6 +440,9 @@ EXAMPLES:
 
   # Custom colors (green on black terminal style)
   npx tsx scripts/export-gif.ts --color "#00ff00" --bg "#000000"
+
+  # Surprise me! Random everything
+  npx tsx scripts/export-gif.ts --random
 `);
 }
 
@@ -385,7 +459,10 @@ async function main(): Promise<void> {
   const options = parseArgs();
 
   try {
-    if (options.all) {
+    if (options.random) {
+      const randomOpts = generateRandomOptions(options);
+      await exportGif(randomOpts);
+    } else if (options.all) {
       await exportAll(options);
     } else {
       await exportGif(options);
