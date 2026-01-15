@@ -6,7 +6,7 @@ This task list is organized by implementation phases as outlined in docs/SPEC.md
 
 ## Next Agent Instructions
 
-**Current Status:** Phases M1-M3 are complete. The core rendering engine and all five Svelte components are implemented and working.
+**Current Status:** Phases M1-M3 are complete. Package consolidated into single `@autumnsgrove/gossamer` with `./svelte` subpath. Glass integration started but rendering not yet working.
 
 ### What's Been Built
 
@@ -19,7 +19,7 @@ This task list is organized by implementation phases as outlined in docs/SPEC.md
    - `utils/image.ts` - Image loading and pixel sampling
    - `utils/performance.ts` - Visibility observers, reduced-motion detection
 
-2. **Svelte Package** (`packages/svelte/src/`):
+2. **Svelte Components** (`packages/core/src/svelte/`) - Now in main package!:
    - `GossamerClouds.svelte` - Animated ambient backgrounds
    - `GossamerImage.svelte` - Image-to-ASCII with hover reveal
    - `GossamerText.svelte` - Text with animation effects
@@ -27,33 +27,50 @@ This task list is organized by implementation phases as outlined in docs/SPEC.md
    - `GossamerBorder.svelte` - ASCII border decorations
    - `presets.ts` - 11 presets (grove, seasonal, ambient)
 
+3. **GroveEngine Integration** (started):
+   - `Glass.svelte` - Added gossamer prop support
+   - `GlassCard.svelte` - Added gossamer prop support
+   - Vineyard page - Added toggles to test Gossamer effects
+
 ### Priority Tasks for Next Session
 
-1. **Install dependencies and test build** (first thing to do):
+1. **🔴 FIX: Debug Gossamer rendering in Glass components**
+   The integration is wired up but nothing renders visually. Possible issues:
+   - Vite bundling of Svelte components (compiled JS vs raw .svelte files)
+   - CSS not being injected properly despite import
+   - Canvas not receiving proper dimensions from parent
+   - ResizeObserver not firing on initial mount
+
+   **Debugging steps to try:**
    ```bash
-   pnpm install
-   pnpm build
+   # Check browser console for errors
+   # Inspect DOM to see if canvas element exists
+   # Check if GossamerClouds component is mounting
+   # Add console.logs to GossamerClouds.svelte to trace execution
+   # Try a standalone test page with just GossamerClouds
    ```
 
-2. **Create examples** (`examples/` directory):
-   - Vanilla HTML/JS example showing core usage
-   - SvelteKit example with all components
+2. **Consider alternative packaging approaches:**
+   - Use `svelte-package` instead of Vite for Svelte components
+   - Ship raw .svelte files instead of compiled JS
+   - Test with published NPM version instead of linked package
 
-3. **Add unit tests** (use `javascript-testing` skill):
-   - Test pattern generators
-   - Test brightness calculations
-   - Test character set utilities
+3. **Create standalone example** to isolate the issue:
+   - Create a minimal SvelteKit app that imports GossamerClouds directly
+   - Verify the component works outside of Glass wrapper
 
 4. **Create API documentation** (`docs/API.md`)
 
 ### Key Files to Review
 - `docs/SPEC.md` - Full specification with API designs
 - `packages/core/src/index.ts` - All core exports
-- `packages/svelte/src/index.ts` - All Svelte exports
+- `packages/core/src/svelte/index.ts` - All Svelte exports
 
-### Package Dependencies
-- Core: `@autumnsgrove/gossamer` (vanilla TS, no deps)
-- Svelte: `@gossamer/svelte` (depends on core via workspace)
+### Package Structure
+- `@autumnsgrove/gossamer` - Main package (published to NPM as v0.1.0)
+  - Import core: `import { GossamerRenderer } from '@autumnsgrove/gossamer'`
+  - Import Svelte: `import { GossamerClouds } from '@autumnsgrove/gossamer/svelte'`
+  - Import CSS: `import '@autumnsgrove/gossamer/svelte/style.css'`
 
 ---
 
@@ -205,4 +222,4 @@ Project setup and tooling.
 ---
 
 **Last Updated:** 2026-01-14
-**Status:** Phase M1-M3 complete. Core library and Svelte components implemented. Vitest configured with 107 tests passing (85 core + 22 svelte). Ready for examples and documentation.
+**Status:** Phase M1-M3 complete. Package consolidated to single @autumnsgrove/gossamer with ./svelte subpath (v0.1.0 published to NPM). GroveEngine Glass integration started but rendering not working - needs debugging. 107 tests passing.
