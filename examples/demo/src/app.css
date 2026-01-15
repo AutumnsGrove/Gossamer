@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-foreground: #1a1915;
+  --color-foreground-muted: #555248;
+  --color-foreground-subtle: #9a9387;
+  --color-background: #fefdfb;
+  --color-surface: #faf8f3;
+  --color-primary: #22c55e;
+  --color-primary-light: #86efac;
+  --color-border: #e2ddd0;
+}
+
+.dark {
+  --color-foreground: #fefdfb;
+  --color-foreground-muted: #c4bdb0;
+  --color-foreground-subtle: #9a9387;
+  --color-background: #1a1915;
+  --color-surface: #252420;
+  --color-primary: #4ade80;
+  --color-primary-light: #86efac;
+  --color-border: #3d3830;
+}
+
+html {
+  font-family: 'Lexend', system-ui, sans-serif;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  min-height: 100vh;
+}
+
+@layer components {
+  .glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+  }
+
+  .dark .glass-card {
+    background: rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.05);
+  }
+
+  .btn-primary {
+    @apply px-6 py-3 bg-grove-500 text-white rounded-lg font-medium;
+    @apply hover:bg-grove-600 transition-colors;
+    @apply focus:outline-none focus:ring-2 focus:ring-grove-400 focus:ring-offset-2;
+  }
+
+  .btn-secondary {
+    @apply px-4 py-2 border border-current rounded-lg font-medium;
+    @apply hover:bg-grove-500/10 transition-colors;
+  }
+}
+
+/* Pattern card styling */
+.pattern-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  aspect-ratio: 16 / 10;
+}
+
+.pattern-card canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Animation */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s ease-out forwards;
+}

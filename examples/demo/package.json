@@ -1,0 +1,30 @@
+{
+  "name": "gossamer-demo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-auto": "^4.0.0",
+    "@sveltejs/kit": "^2.49.0",
+    "@sveltejs/vite-plugin-svelte": "^5.0.0",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "svelte": "^5.0.0",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5.0.0",
+    "vite": "^6.0.0"
+  },
+  "dependencies": {
+    "@autumnsgrove/gossamer": "workspace:*",
+    "@autumnsgrove/groveengine": "^0.9.6",
+    "@lucide/svelte": "^0.482.0",
+    "bits-ui": "^1.8.0",
+    "lucide-svelte": "^0.469.0",
+    "tailwind-variants": "^0.3.0"
+  }
+}
