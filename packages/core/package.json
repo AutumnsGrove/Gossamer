@@ -1,6 +1,6 @@
 {
   "name": "@autumnsgrove/gossamer",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "ASCII visual effects library - Threads of light for your web applications",
   "type": "module",
   "main": "./dist/index.js",
