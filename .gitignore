@@ -51,6 +51,7 @@ Thumbs.db
 # Build tools
 .turbo/
 .cache/
+.svelte-kit/
 
 # Python (for any tooling scripts)
 __pycache__/

@@ -6,27 +6,23 @@
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "svelte": "./dist/svelte/index.js",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "default": "./dist/index.js"
     },
     "./svelte": {
       "types": "./dist/svelte/index.d.ts",
       "svelte": "./dist/svelte/index.js",
-      "import": "./dist/svelte/index.js"
-    },
-    "./svelte/style.css": "./dist/style.css",
-    "./style.css": "./dist/style.css"
+      "default": "./dist/svelte/index.js"
+    }
   },
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "scripts": {
-    "dev": "vite build --watch",
-    "build": "vite build",
+    "dev": "svelte-package -i src -o dist --watch",
+    "build": "svelte-package -i src -o dist",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
@@ -69,6 +65,7 @@
     }
   },
   "devDependencies": {
+    "@sveltejs/package": "^2.5.7",
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
     "@types/node": "^20.10.0",
     "canvas": "^3.2.1",
