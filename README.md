@@ -23,7 +23,7 @@
 
 **ASCII visual effects for the web.** Character-based animations, ambient backgrounds, and image transformations powered by Canvas 2D. Simple, charming, performant.
 
-[![NPM Version](https://img.shields.io/npm/v/gossamer)](https://www.npmjs.com/package/gossamer)
+[![NPM Version](https://img.shields.io/npm/v/@autumnsgrove/gossamer)](https://www.npmjs.com/package/@autumnsgrove/gossamer)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ---
